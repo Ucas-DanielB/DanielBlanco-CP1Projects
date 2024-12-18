@@ -2,38 +2,17 @@ import random
 
 # Player stats
 player_health = 100
-player_attack = 5
+player_attack = 30
 inventory = []
 
 # Function to display player's status
 def display_status():
     print(f"Health: {player_health}")
-    print(f"Attack: {player_attack}")
     print("Inventory:", inventory)
-
-# Function to update player stats based on equipped items
-def update_player_stats(item):
-    global player_health, player_attack
-    if item == "Weak Knife":
-        player_attack += 30  # Weak Knife adds 30 attack damage
-    elif item == "Specialized Mop":
-        player_attack += 50  # Specialized Mop adds 50 attack damage
-    elif item == "Weak Helmet":
-        player_health += 30  # Weak Helmet adds 30 health
-    elif item == "Trash Can Helmet":
-        player_health += 50  # Trash Can Helmet adds 50 health
-    elif item == "Field Officer Sword":
-        player_attack += 60  # Field Officer Sword adds 60 attack damage
-    elif item == "Bulletproof Armor":
-        player_health += 100  # Bulletproof Armor adds 100 health
-    elif item == "Blast Suit Armor":
-        player_health += 150  # Blast Suit Armor adds 150 health
-    elif item == "Hand Grenades":
-        player_attack += 100  # Hand Grenades adds 100
 
 # Function to handle combat
 def combat(monster_health, monster_attack, monster_name, loot):
-    global player_health, player_attack
+    global player_health
     player_damage = player_attack
     while monster_health > 0 and player_health > 0:
         print(f"\n{monster_name} Health: {monster_health}")
@@ -65,13 +44,12 @@ def combat(monster_health, monster_attack, monster_name, loot):
     # Monster defeated, give loot
     print(f"You defeated the {monster_name}!")
     inventory.append(loot)
-    update_player_stats(loot)  # Update stats based on loot received
     return True  # Player won
 
 # Function to get heal item from inventory
 def get_heal_item():
     if "Bandage" in inventory:
-        return 20  # Bandage heals 20 health
+        return 75  # Bandage heals 75 health
     return 0
 
 # Function for movement to locations
@@ -87,6 +65,7 @@ def move_to_location(location):
         print("\nYou entered the West House and encountered a monster!")
         if combat(30, 5, "West House Monster", "Weak Knife"):
             print("You got a Weak Knife!")
+            Weak_Knife += player_attack
         return
 
     elif location == "East House":
@@ -136,17 +115,18 @@ def move_to_location(location):
 
     elif location == "State Line":
         print("\nYou reached the State Line, the final boss!")
-        if combat(200, 50, "State Line Boss", "Nothing (You won!)"):
-            print("Congratulations, you have defeated the final boss and escaped the city!")
-
+        if "Hand Grenades" in inventory and "Blast Suit Armor" in inventory:
+            if combat(200, 50, "State Line Boss", "Nothing (You won!)"):
+                print("Congratulations, you have defeated the final boss and escaped the city!")
+                return
+        else:
+            print("You need the Blast Suit Armor and Hand Grenades to defeat this boss!")
             return
-            
-            
-        
+
 # Main game loop
 def main():
     global player_health
-    print("Welcome to the Escape the Overrun Demonic Inhabitated Monsters Game!")
+    print("Welcome to the City Escape Game!")
     print("You start in the Center Plaza. Your goal is to defeat all the monsters and escape the city.")
     print("Type 'inventory' to check your inventory and 'quit' to end the game.")
     location = "Center Plaza"
@@ -156,7 +136,7 @@ def main():
             break
         print(f"\nYou are currently in the {location}.")
         display_status()
-        action = input("Where would you like to go? (West House, East House, North House, or quit)(These are your starting locations, after defeating them, you will have gained the items necessary to progress, you must then go to the western/eastern school district, then the western/eastern military, then the city border, then finally the state line): ").lower()
+        action = input("Where would you like to go? (West House, East House, North House, or quit): ").lower()
         if action == "quit":
             print("You quit the game.")
             break
@@ -184,5 +164,3 @@ def main():
 # Start the game
 if __name__ == "__main__":
     main()
-
-#
