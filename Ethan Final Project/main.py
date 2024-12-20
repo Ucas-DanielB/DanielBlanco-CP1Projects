@@ -1,205 +1,145 @@
+#Ethan Blanco, Final Project
+
 import random
 
-class AdventureGame:
-    def __init__(self, player):
-        self.player = player
-        self.location = "PLAINS"
-        self.inventory = []  # List to store special items
-        self.game_running = True  # Loop control
-
-def play(self):
-    while self.game_running:  # The loop keeps the game running until the player decides to stop
-        if self.location == "PLAINS":
-            self.plains()
-        elif self.location == "DESERT":
-            self.desert()
-        elif self.location == "DUNES":
-            self.dunes()
-        elif self.location == "CAVES":
-            self.caves()
-        elif self.location == "PORT":
-            self.port()
-        elif self.location == "WASTELANDS":
-            self.wastelands()
-        elif self.location == "HOTLANDS":
-            self.hotlands()
-        elif self.location == "ICECAPS":
-            self.icecaps()
-        elif self.location == "HIGHPLAINS":
-            self.highplains()
-        elif self.location == "BEACH":
-            self.beach()
-        elif self.location == "CYBER CITY":
-            self.cyber_city()
-        else:
-            print("Unknown location.")
-            self.game_running = False
-
-def plains(self):
-    print("You are in the Plains.")
-    if self.player["weapon"] <= 0:
-        print("You encountered an NPC and gained a weapon and armor!")
-        self.player["weapon"] += 1
-        self.player["armor"] += 1
-    elif self.player["level"] <= 5:
-        print("You encountered an enemy and need to fight!")
-        self.fight()
-    else:
-        print("You encountered an NPC and progressed to the Desert.")
-        self.location = "DESERT"
-
-def desert(self):
-    print("Do you want to go to the desert? (yes/no)")
-    choice = input().lower()
-    if choice == "yes":
-        self.location = "DESERT"
-        print("You encountered a tough story NPC and a high-level enemy!")
-        self.fight()
-        if self.player["level"] >= 15:
-            self.location = "DUNES"
-            print("You progressed to the Dunes!")
-            self.dunes()
-    elif choice == "no":
-        self.location = "CAVES"
-        print("You encountered a low-level enemy!")
-        self.fight()
-        if self.player["level"] >= 7:
-            print("You encountered a story NPC and another low-level enemy!")
-            self.fight()
-
-def dunes(self):
-    print("You encountered a health item, high armor, high weapon, and a mini-boss!")
-    self.player["weapon"] += 2
-    self.player["armor"] += 2
-    self.fight()
-    print("You encountered a dune NPC and progressed to the Port.")
-    self.location = "PORT"
-
-def caves(self):
-    print("You encountered a low-level enemy!")
-    self.fight()
-    if self.player["level"] >= 7:
-        print("You encountered a story NPC and another low-level enemy!")
-        self.fight()
-    else:
-        self.location = "MOUNTAINS"
-        print("You are now in the Mountains.")
-        if self.player["level"] >= 15:
-            print("You encountered a health item, low armor, low weapon, and a low-level enemy!")
-            self.fight()
-        else:
-            self.location = "DUNES"
-            print("You encountered a health item, high armor, high weapon, and a mini-boss!")
-            self.fight()
-            if self.player["level"] >= 15:
-                print("You defeated the mini-boss and progressed to the Port.")
-                self.location = "PORT"
-
-def port(self):
-    print("Do you want to buy a boat? (yes/no)")
-    choice = input().lower()
-    if choice == "yes":
-        self.inventory.append("Boat")  # Adding the boat to the inventory
-        print("You acquired a boat and progressed to the Wastelands.")
-        self.location = "WASTELANDS"
-    elif choice == "no":
-        print("Backtracking to the Desert or Plains.")
-        self.backtrack()
-
-def backtrack(self):
-    print("Do you want to go to the Desert? (yes/no)")
-    choice = input().lower()
-    if choice == "yes":
-        self.location = "DESERT"
-    else:
-        print("Do you want to go to the Plains? (yes/no)")
-        choice = input().lower()
-        if choice == "yes":
-            self.location = "PLAINS"
-        else:
-            self.location = "DESERT"
-
-def wastelands(self):
-    print("You encountered a story NPC.")
-    if self.player["level"] <= 20:
-        print("You gained a special weapon!")
-        self.player["weapon"] += 1
-        self.fight()
-    if self.player["level"] >= 25:
-        print("You encountered a wasteland boss!")
-        self.fight()
-        self.hotlands()
-
-def hotlands(self):
-    print("You gained special hotland armor!")
-    self.player["armor"] += 2
-    if self.player["level"] <= 30:
-        print("You encountered a hotland enemy!")
-        self.fight()
-    else:
-        print("You encountered a hotland NPC and gained a special weapon!")
-        self.player["weapon"] += 2
-
-def icecaps(self):
-    print("You gained special icecap armor!")
-    self.player["armor"] += 2
-    if self.player["level"] <= 40:
-        print("You encountered an icecap world event and phenomena!")
-    else:
-        print("You encountered an icecap boss!")
-        self.fight()
-        self.highplains()
-
-def highplains(self):
-    print("You encountered a new NPC with unique armors and new weapons!")
-    if self.player["armor"] <= 5 and self.player["weapon"] <= 5:
-        print("You progressed to the Beach!")
-        self.beach()
-
-def beach(self):
-    if "Special Item" in self.inventory:  # Check for special item in inventory
-        print("You opened the gate and progressed to Cyber City.")
-        self.cyber_city()
-    else:
-        print("Backtracking to High Plains.")
-        self.highplains()
-
-def cyber_city(self):
-    print("Are you ready for the final island? (yes/no)")
-    choice = input().lower()
-    if choice == "yes":
-        print("Progressing further to Cyber City.")
-        self.fight()
-        print("You encountered a cyber city NPC and cyber city boss!")
-        self.fight()
-        print("You won the game!")
-        self.game_running = False  # Break out of the loop, ending the game
-    elif choice == "no":
-        print("Backtracking to previous locations.")
-        self.backtrack()
-
-def fight(self):
-    print("Fighting!")
-    dice_roll = random.randint(1, 12)
-    base_damage = dice_roll + self.player["weapon"]
-    print(f"You dealt {base_damage} damage!")
-
-def combat_system(self):
-    if self.player["level"] <= 10:
-        print("You deal less damage.")
-    else:
-        print("You deal more damage.")
-    if self.player["weapon"] >= 5 and self.player["armor"] >= 5:
-        print("You deal less damage and take more damage.")
-    else:
-        print("You deal more damage and take less damage.")
-
-# Example player setup
+# Player Stats and Inventory
 player = {
-    "level": 5,
-    "weapon": 0,
-    "armor": 0,
+    "level": 1,
+    "strength": 5,
+    "defense": 5,
+    "health": 20,
+    "gold": 0,
+    "inventory": []
 }
 
-game = AdventureGame(player)
-game.play()
+locations = {
+    "Plains": {"visited": False, "items": ["Basic Sword", "Armor Piece"], "enemies": [{"name": "Wolf", "health": 15}]},
+    "Desert": {"visited": False, "items": ["Key", "Potion"], "enemies": [{"name": "Bandit", "health": 50}]},
+    "Caves": {"visited": False, "items": ["Shield"], "enemies": [{"name": "Spider", "health": 18}]},
+    "Mountains": {"visited": False, "items": [], "enemies": [{"name": "Bear", "health": 30}]},
+    "Port": {"visited": False, "items": ["Boat"], "enemies": []},
+    "Wastelands": {"visited": False, "items": ["Flaming Sword"], "enemies": [{"name": "Fire Golem", "health": 50}]},
+    "Hotlands": {"visited": False, "items": ["Fireproof Armor"], "enemies": [{"name": "Fire Elemental", "health": 40}]},
+    "Ice Caps": {"visited": False, "items": ["Ice Pick"], "enemies": [{"name": "Ice Guardian", "health": 60}]},
+    "Cyber City": {"visited": False, "items": ["Laser Gun"], "enemies": [{"name": "Cyber Computer", "health": 150}]}
+}
+
+# Helper Functions
+def show_stats():
+    print("\n=== Player Stats ===")
+    for key, value in player.items():
+        if key != "inventory":
+            print(f"{key.capitalize()}: {value}")
+    print("====================\n")
+
+def explore_location(location_name):
+    location = locations[location_name]
+    print(f"\nExploring {location_name}...")
+    if not location["visited"]:
+        print(f"You find the following items: {', '.join(location['items'])}")
+        player["inventory"].extend(location["items"])
+        location["items"] = []
+        location["visited"] = True
+    else:
+        print("You have already explored this area.")
+
+    if location["enemies"]:
+        print("You encounter an enemy!")
+        fight_enemy(location["enemies"].pop(0))
+    else:
+        print("The area seems safe for now.\n")
+
+def fight_enemy(enemy):
+    print(f"A wild {enemy['name']} appears!")
+    while enemy["health"] > 0 and player["health"] > 0:
+        print(f"\nEnemy Health: {enemy['health']}")
+        print(f"Your Health: {player['health']}")
+        print("1. Attack\n2. Defend\n3. Use Item")
+        action = input("Choose your action: ")
+
+        if action == "1":
+            damage = random.randint(1, 6) + player["strength"]
+            enemy["health"] -= damage
+            print(f"You deal {damage} damage to the {enemy['name']}!")
+        elif action == "2":
+            block = random.randint(1, 4) + player["defense"]
+            print(f"You brace yourself, reducing incoming damage by {block}.")
+        elif action == "3":
+            use_item()
+            continue
+        else:
+            print("Invalid choice! You lose your turn.")
+
+        if enemy["health"] > 0:
+            enemy_damage = max(0, random.randint(3, 8) - player["defense"])
+            player["health"] -= enemy_damage
+            print(f"The {enemy['name']} deals {enemy_damage} damage to you!")
+
+        if player["health"] <= 0:
+            print("You have been defeated! Game over.")
+            quit()
+
+    print(f"You defeated the {enemy['name']}!")
+    player["level"] += 1
+    player["gold"] += random.randint(5, 15)
+    print("You gain a level and collect some gold!\n")
+
+def use_item():
+    print("\nYour Inventory:")
+    for i, item in enumerate(player["inventory"], 1):
+        print(f"{i}. {item}")
+    choice = input("Enter the number of the item to use or 'cancel': ")
+    if choice.isdigit():
+        choice = int(choice) - 1
+        if 0 <= choice < len(player["inventory"]):
+            item = player["inventory"].pop(choice)
+            if item == "Potion":
+                player["health"] += 10
+                print("You use a Potion and regain 10 health!")
+            else:
+                print(f"You can't use the {item} right now.")
+        else:
+            print("Invalid item choice.")
+    elif choice.lower() == "cancel":
+        print("You decided not to use an item.")
+    else:
+        print("Invalid input.")
+
+def travel():
+    print("\nAvailable Locations:")
+    for i, location in enumerate(locations.keys(), 1):
+        print(f"{i}. {location}")
+    choice = input("Enter the number of the location to travel to: ")
+    if choice.isdigit():
+        choice = int(choice) - 1
+        if 0 <= choice < len(locations):
+            location_name = list(locations.keys())[choice]
+            explore_location(location_name)
+        else:
+            print("Invalid location choice.")
+    else:
+        print("Invalid input.")
+
+# Main Game Loop
+def main():
+    print("Welcome to the Text-Based Adventure Game!")
+    while True:
+        show_stats()
+        print("1. Explore\n2. Travel\n3. View Stats\n4. Quit")
+        choice = input("What would you like to do? ")
+
+        if choice == "1":
+            current_location = "Plains"  # Start at the Plains
+            explore_location(current_location)
+        elif choice == "2":
+            travel()
+        elif choice == "3":
+            show_stats()
+        elif choice == "4":
+            print("Thank you for playing! Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+# Run the game
+main()
